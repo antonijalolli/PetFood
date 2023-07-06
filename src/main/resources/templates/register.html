@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="favicon.ico"/>
+
+    <title>User Registration</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link th:href="@{css/style.css}" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+
+<div class="container w-50">
+    <form class="form-horizontal" th:action="@{/register}" method="POST" th:object="${user}">
+        <fieldset>
+            <div id="legend">
+                <h2>REGISTER</h2>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="firstName">FirstName</label>
+                <div class="controls">
+                    <input type="text" id="firstName" name="firstName" placeholder="First Name"
+                           class="form-control mb-3" th:field="*{firstName}" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="lastName">LastName</label>
+                <div class="controls">
+                    <input type="text" id="lastName" name="lastName" placeholder="Last Name" class="form-control mb-3"
+                           th:field="*{lastName}" required>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="email">E-mail</label>
+                <div class="controls">
+                    <input type="text" id="email" name="email" class="form-control mb-3" th:field="*{email}"
+                           placeholder="Your E-mail" required>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="password">Password</label>
+                <div class="controls">
+                    <input type="password" id="password" name="password" placeholder="Your password"
+                           class="form-control mb-3" th:field="*{password}" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" style="margin-bottom:30px; margin-top: 20px">Register</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <a th:href="@{/login}">Login</a>
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
+
+</body>
+
+</html>
+

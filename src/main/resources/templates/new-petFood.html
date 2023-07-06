@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>SHOP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+</head>
+<body class="white">
+<nav class="navbar navbar-light bg-dark p-3">
+    <form class="form-inline">
+        <li sec:authorize="hasAuthority('ADMIN')" style="text-decoration: none; list-style: none"><a class="btn btn-outline-success"
+                                                                                                     th:href="@{/petFoods/add-new}">Add Pet Food</a></li>
+        <li style="text-decoration: none; list-style: none"><a style="margin-left:5px" class="btn btn-outline-success"
+                                                               th:href="@{/petFoods}">Home Page</a></li>
+        <li class="nav-item" style="text-decoration: none; list-style: none"></li>
+        <li sec:authorize="hasAuthority('USER')" style="text-decoration: none; list-style: none; margin-left:1110px"><a class="btn btn-outline-success" th:href="@{shopping-carts/list}">Cart</a></li>
+    </form>
+    <form th:action="@{/logout}" method="post">
+        <button class="btn btn-outline-info">logout</button>
+    </form>
+</nav>
+<div class="container w-25 mt-5">
+    <form th:action="@{/petFoods}" th:object="${petFood}" enctype="multipart/form-data" method="POST">
+        <input type="hidden" name="id" th:value="*{id}">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Pet food name</label>
+            <input th:field="*{name}" type="text" class="form-control" id="formGroupExampleInput"
+                   placeholder="Pet food">
+        </div>
+        <div class="form-group">
+            <label for="edition">Edition</label>
+            <input type="number" id="edition" th:field="*{edition}" class="form-control" placeholder="Edition">
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" id="price" th:field="*{price}" class="form-control" placeholder="Price">
+        </div>
+        <div class="form-group">
+            <div class="mb-2">Category</div>
+            <div class="row">
+                <div class="col">
+                    <select th:field="*{category}" class="form-control">
+                        <option th:each="category : ${categories}" th:text="${category.name}"
+                                th:value="${category.id}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="mb-2">Brand</div>
+            <div class="row">
+                <div class="col">
+                    <select th:field="*{brand}" class="form-control">
+                        <option th:each="brand : ${brands}" th:text="${brand.name}"
+                                th:value="${brand.id}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Image</label>
+            <input name="image"  type="file" class="form-control"/>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-outline-info w-50 mt-3" style="font-size: 18px; font-weight: bold">Save</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

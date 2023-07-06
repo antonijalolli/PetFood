@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping cart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+</head>
+<body class="white">
+<nav class="navbar navbar-light bg-dark p-3">
+    <form class="form-inline">
+        <li sec:authorize="hasAuthority('ADMIN')" style="text-decoration: none; list-style: none"><a
+                class="btn btn-outline-success"
+                th:href="@{/petFoods/add-new}">Add Pet Food</a></li>
+        <li style="text-decoration: none; list-style: none"><a style="margin-left:5px" class="btn btn-outline-success"
+                                                               th:href="@{/petFoods}">Home Page</a></li>
+        <li class="nav-item" style="text-decoration: none; list-style: none"></li>
+        <li sec:authorize="hasAuthority('USER')" style="text-decoration: none; list-style: none; margin-left:1110px"><a
+                class="btn btn-outline-success" th:href="@{shopping-carts/list}">Cart</a></li>
+    </form>
+    <form th:action="@{/logout}" method="post">
+        <button class="btn btn-outline-info">logout</button>
+    </form>
+</nav>
+<div class="container">
+    <div class="p-3">
+        <h3>Shopping cart</h3>
+    </div>
+    <div class="row p-5">
+        <div th:each="petFoodInSC : ${petFoodsInShoppingCart}" th:object="${petFoodInSC}" class="col">
+            <div class="card mt-5" style="width: 18rem;">
+                <img class="card-img-top" alt="..." th:src="${petFoodInSC.getImage()}">
+                <div class="card-body">
+                    <h5 th:text="${petFoodInSC.name}" class="card-title" style="font-weight: bold; font-size:24px">Card title</h5>
+                    <h5 th:text="${petFoodInSC.category.name}" class="card-title">Card title</h5>
+                    <h5 th:text="${petFoodInSC.brand.name}" class="card-title">Card title</h5>
+                    <p class="card-text" th:text="${petFoodInSC.category.description}">Some quick example text to build on the
+                        card title and make up the bulk of the card's content.</p>
+                    <p class="card-text" th:text="${petFoodInSC.brand.specification}">Some quick example text to build on the card
+                        title and make up the bulk of the card's content.</p>
+                    <h5>Edition: <span class="card-text" th:text="${petFoodInSC.edition}"></span></h5><br>
+                    <h5>Price: <span class="card-text" th:text="${petFoodInSC.price}"></span>$</h5>
+                    <form sec:authorize="hasAuthority('USER')" style="display: inline-block" th:action="@{/shopping-carts/remove/{petFoodId}(petFoodId=${petFoodInSC.id})}"
+                          th:method="delete">
+                        <button type="submit" class="btn btn-danger ml-3 mt-3">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
